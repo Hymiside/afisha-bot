@@ -48,6 +48,8 @@ def create_keyboard_category(user_id: int) -> InlineKeyboardBuilder:
             temp_data.clear()
             temp_data.append(
                 types.InlineKeyboardButton(text=value, callback_data=key))
+    if temp_data:
+        builder.row(*temp_data)
     builder.row(
         types.InlineKeyboardButton(text="Готово!", callback_data="done"))
 
