@@ -6,8 +6,8 @@ from aiogram.enums.parse_mode import ParseMode
 from aiogram.filters import Text
 from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 
-from afisha_bot.settings import Settings
-from afisha_bot.service import service
+from settings import Settings
+from service import service
 
 settings = Settings()
 
@@ -80,11 +80,11 @@ async def done_pick_category(callback: types.CallbackQuery):
 
             if i[6]:
                 await bot.send_photo(chat_id=user_id, photo=i[6],
-                                     caption=f"*{i[1]}*\n\n{i[2]}\n\n_Дата:_ {i[3]}\n\n_Стоимость:_ {i[4]}",
+                                     caption=f"*{i[1]}*\n\n{i[2]}\n\n_Дата:_ {i[3]}\n_Стоимость:_ {i[4]}",
                                      parse_mode=ParseMode.MARKDOWN, reply_markup=builder_link.as_markup())
             else:
-                await callback.message.answer(f"*{i[1]}*\n\n{i[2]}\n\n_Дата:_ {i[3]}\n\n_Стоимость:_ {i[4]}",
-                                     parse_mode=ParseMode.MARKDOWN, reply_markup=builder_link.as_markup())
+                await callback.message.answer(f"*{i[1]}*\n\n{i[2]}\n\n_Дата:_ {i[3]}\n_Стоимость:_ {i[4]}",
+                                              parse_mode=ParseMode.MARKDOWN, reply_markup=builder_link.as_markup())
 
 
 @dp.message(Text("Мои интересы"))
