@@ -76,14 +76,14 @@ async def done_pick_category(callback: types.CallbackQuery):
 
         for i in data:
             builder_link = InlineKeyboardBuilder()
-            builder_link.add(types.InlineKeyboardButton(text="Подробнее", url=f"https:/vk.cc/{i[7]}"))
+            builder_link.add(types.InlineKeyboardButton(text="Подробнее", url=f"https://vk.cc/{i[7]}"))
 
             if i[6]:
                 await bot.send_photo(chat_id=user_id, photo=i[6],
-                                     caption=f"*{i[1]}*\n\n{i[2]}\n\n_Дата:_ {i[3]}\n_Стоимость:_ {i[4]}",
+                                     caption=f"*{i[1]}*\n\n{i[2]}",
                                      parse_mode=ParseMode.MARKDOWN, reply_markup=builder_link.as_markup())
             else:
-                await callback.message.answer(f"*{i[1]}*\n\n{i[2]}\n\n_Дата:_ {i[3]}\n_Стоимость:_ {i[4]}",
+                await callback.message.answer(f"*{i[1]}*\n\n{i[2]}",
                                               parse_mode=ParseMode.MARKDOWN, reply_markup=builder_link.as_markup())
 
 
