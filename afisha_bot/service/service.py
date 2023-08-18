@@ -1,8 +1,8 @@
 from aiogram import types
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from afisha_bot.state.state import STATE
-from afisha_bot.repository import repository
+from state.state import STATE
+from repository import repository
 
 
 def get_state(user_id: int) -> dict:
