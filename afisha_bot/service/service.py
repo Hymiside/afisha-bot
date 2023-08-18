@@ -26,6 +26,10 @@ def get_user_category(user_id: int) -> list:
     return repository.get_user_category(user_id)
 
 
+def get_last_mailings(categories: list) -> list:
+    return repository.get_last_mailings(categories)
+
+
 
 def set_user(user_id: int, nickname: str, username: str, category_ids: list) -> bool:
     return repository.set_user(user_id, username, nickname, category_ids)

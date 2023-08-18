@@ -6,10 +6,12 @@ from aiogram.enums.parse_mode import ParseMode
 from aiogram.filters import Text
 from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 
-from settings import settings
+from afisha_bot.settings import Settings
 from afisha_bot.service import service
 
-bot = Bot(token=settings.bot_token.get_secret_value())
+settings = Settings()
+
+bot = Bot(token=settings.bot_token)
 dp = Dispatcher()
 
 
@@ -67,16 +69,31 @@ async def done_pick_category(callback: types.CallbackQuery):
         reply_markup=builder.as_markup(resize_keyboard=True), parse_mode=ParseMode.MARKDOWN)
     await callback.answer()
 
+    data = service.get_last_mailings(res)
+    if len(data) != 0:
+        if len(data) > 5:
+            data = data[:5]
+
+        for i in data:
+            builder_link = InlineKeyboardBuilder()
+            builder_link.add(types.InlineKeyboardButton(text="Подробнее", url=i[7]))
+
+            await bot.send_photo(chat_id=user_id, photo=i[6],
+                                 caption=f"*{i[1]}*\n\n{i[2]}\n\n_Дата:_ {i[3]}\n\n_Стоимость:_ {i[4]}",
+                                 parse_mode=ParseMode.MARKDOWN, reply_markup=builder_link.as_markup())
+
 
 @dp.message(Text("Мои интересы"))
 async def edit_category(message: types.Message):
     user_id = message.from_user.id
     data = service.get_user_category(user_id)
 
+    msg_data = ", ".join(data)
+    if not data:
+        msg_data = "У вас пока нет выбранных интересов"
+
     builder = InlineKeyboardBuilder()
     builder.row(types.InlineKeyboardButton(text="Редактировать", callback_data="edit"))
-
-    msg_data = ", ".join(data)
 
     await message.answer(f"*Ваши интересы:*\n\n{msg_data}", reply_markup=builder.as_markup(), parse_mode=ParseMode.MARKDOWN)
 
